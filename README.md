@@ -5,14 +5,15 @@
 A Collection of LiDAR-Camera-Calibration Papers, Toolboxes and Notes. 
 
 **Outline**
-- [Introduction](#0-introduction)
-- [Target-based methods](#1-target-based-methods)
-- [Targetless methods](#2-targetless-methods)
-  - [Motion-based methods](#21-motion-based-methods)
-  - [Scene-based-methods](#22-scene-based-methods)
-    - [Traditional Methods](#221-traditional-methods)
-    - [Deep-learning Methods](#222-deep-learning-methods)
-- [Other Toolboxes](#3-other-toolboxes)
+- [Awesome-LiDAR-Camera-Calibration](#awesome-lidar-camera-calibration)
+  - [0. Introduction](#0-introduction)
+  - [1. Target-based methods](#1-target-based-methods)
+  - [2. Targetless methods](#2-targetless-methods)
+    - [2.1. Motion-based methods](#21-motion-based-methods)
+    - [2.2. Scene-based methods](#22-scene-based-methods)
+      - [2.2.1. Traditional feature-based methods](#221-traditional-feature-based-methods)
+      - [2.2.2 Deep feature-based methods](#222-deep-feature-based-methods)
+      - [2.2.3 E2E learning-based methods](#223-e2e-learning-based-methods)
 
 ## 0. Introduction
 For applications such as autonomous driving, robotics, navigation systems, and 3-D scene reconstruction, data of the same scene is often captured using both lidar and camera sensors. To accurately interpret the objects in a scene, it is necessary to fuse the lidar and the camera outputs together. Lidar camera calibration estimates a **rigid transformation matrix (extrinsics, rotation+translation, 6 DoF)** that establishes the correspondences between the points in the 3-D lidar plane and the pixels in the image plane. 
@@ -41,39 +42,58 @@ For applications such as autonomous driving, robotics, navigation systems, and 3
 ## 2. Targetless methods  
 
 ### 2.1. Motion-based methods
-|Paper|Feature|Optimization|Toolbox|Note|
-| --- | --- | --- | --- | --- |
-|[LiDAR and Camera Calibration Using Motions Estimated by Sensor Fusion Odometry, 2018](https://arxiv.org/pdf/1804.05178.pdf)|C: motion (ICP),  L: motion (VO) | hand-eye calibration | * | * | 
+|Paper|Feature|Optimization|Code|
+| --- | --- | --- | --- |
+|[LiDAR and Camera Calibration Using Motions Estimated by Sensor Fusion Odometry, 2018](https://arxiv.org/pdf/1804.05178.pdf)|C: motion (ICP),  L: motion (VO) | hand-eye calibration | N/A |
 
 ### 2.2. Scene-based methods
-#### 2.2.1. Traditional methods
-|Paper|Feature|Optimization|Toolbox|Note|
-| --- | --- | --- | --- | --- |
-|[Automatic Targetless Extrinsic Calibration of a 3D Lidar and Camera by Maximizing Mutual Information, 2012](http://robots.engin.umich.edu/publications/gpandey-2012a.pdf)|C：grayscale, L: reflectivity| mutual information, BB steepest gradient ascent | [Extrinsic Calib](http://robots.engin.umich.edu/SoftwareData/ExtrinsicCalib)|*|
-|[Automatic Calibration of Lidar and Camera Images using Normalized Mutual Information, 2013](http://www-personal.acfr.usyd.edu.au/jnieto/Publications_files/TaylorICRA2013.pdf)|C:grayscale, L: reflectivity, noraml | normalized MI, particle swarm | *|*|
-|[Automatic Online Calibration of Cameras and Lasers, 2013](http://www.roboticsproceedings.org/rss09/p29.pdf)|C: Canny edge, L: depth-discontinuous edge| correlation, grid search | * | * |
-|[SOIC: Semantic Online Initialization and Calibration for LiDAR and Camera, 2020](https://arxiv.org/pdf/2003.04260)|semantic centroid| PnP|*|*|
-|[A Low-cost and Accurate Lidar-assisted Visual SLAM System, 2021](http://www.zywok.com:20441/index.php/s/xEqCafR6dEp4REZ)|C: edge(grayscale), L: edge (reflectivity, depth projection) | ICP,  coordinate descent algorithms | [CamVox](https://github.com/ISEE-Technology/CamVox) |*|
-|[Pixel-level Extrinsic Self Calibration of High Resolution LiDAR and Camera in Targetless Environments,2021](http://arxiv.org/abs/2103.01627)|C:Canny edge(grayscale), L: depth-continuous edge|point-to-line, Gaussian-Newton|[livox_camera_calib](https://github.com/hku-mars/livox_camera_calib)|*|
-|[CRLF: Automatic Calibration and Refinement based on Line Feature for LiDAR and Camera in Road Scenes, 2021](https://arxiv.org/pdf/2103.04558v1.pdf)|C:straight line, L: straight line | perspective3-lines (P3L) | * | [CN](https://cloud.tencent.com/developer/article/1805735) |
-|[Fast and Accurate Extrinsic Calibration for Multiple LiDARs and Cameras,2021](https://arxiv.org/pdf/2109.06550.pdf)|C:Canny edge(grayscale), L: depth-continuous edge|point-to-plane, point-to-edge|[mlcc](https://github.com/hku-mars/mlcc)|*|
-|[General, Single-shot, Target-less, and Automatic LiDAR-Camera Extrinsic Calibration Toolbox,ICRA 2023](https://arxiv.org/pdf/2302.05094.pdf)|C:keypoints, L: keypoints on intensity images (by SuperGlue)|reprojection error minimization, RANSAC|[direct_visual_lidar_calibration](https://github.com/koide3/direct_visual_lidar_calibration)|*|
-|[Calib-Anything: Zero-training LiDAR-Camera Extrinsic Calibration Method Using Segment Anything, 2023](https://arxiv.org/abs/2306.02656)|C: Segmentation, L: normal estimation, plane fitting & euclidean cluster, intensity normalization| random search, grid search|[OpenCalib](https://github.com/PJLab-ADG/SensorsCalibration)|*|
-#### 2.2.2. Deep-learning methods
-|Paper|Toolbox|Note|
-| --- | --- | --- | 
-|[RegNet: Multimodal sensor registration using deep neural networks, 2017,IV](https://arxiv.org/pdf/1707.03167.pdf)|[regnet](https://github.com/aaronlws95/regnet)|*|
-|[CalibNet: Geometrically supervised extrinsic calibration using 3d spatial transformer networks,2018,IROS](https://arxiv.org/pdf/1803.08181.pdf)|[CalibNet](https://github.com/epiception/CalibNet)|*|
-|[LCCNet: Lidar and Camera Self-Calibration using CostVolume Network,2021,CVPRW](https://openaccess.thecvf.com/content/CVPR2021W/WAD/papers/Lv_LCCNet_LiDAR_and_Camera_Self-Calibration_Using_Cost_Volume_Network_CVPRW_2021_paper.pdf)|[LCCNet](https://github.com/IIPCVLAB/LCCNet)|*|
-|[Calib-Anything: Zero-training LiDAR-Camera Extrinsic Calibration Method Using Segment Anything,2023](https://arxiv.org/pdf/2306.02656.pdf)|[Calib-Anything](https://github.com/OpenCalib/CalibAnything)|*|
+#### 2.2.1. Traditional feature-based methods
+|Paper|Feature|Optimization|Code|
+| --- | --- | --- | --- |
+|[Automatic Targetless Extrinsic Calibration of a 3D Lidar and Camera by Maximizing Mutual Information, 2012](http://robots.engin.umich.edu/publications/gpandey-2012a.pdf)|C：grayscale, L: reflectivity| mutual information, BB steepest gradient ascent | [Extrinsic Calib](http://robots.engin.umich.edu/SoftwareData/ExtrinsicCalib)|
+|[Automatic Calibration of Lidar and Camera Images using Normalized Mutual Information, 2013](http://www-personal.acfr.usyd.edu.au/jnieto/Publications_files/TaylorICRA2013.pdf)|C:grayscale, L: reflectivity, noraml | normalized MI, particle swarm | N/A |
+|[Automatic Online Calibration of Cameras and Lasers, 2013](http://www.roboticsproceedings.org/rss09/p29.pdf)|C: Canny edge, L: depth-discontinuous edge| correlation, grid search | N/A |
+|[SOIC: Semantic Online Initialization and Calibration for LiDAR and Camera, 2020](https://arxiv.org/pdf/2003.04260)|semantic centroid| PnP|N/A|
+|[A Low-cost and Accurate Lidar-assisted Visual SLAM System, 2021](http://www.zywok.com:20441/index.php/s/xEqCafR6dEp4REZ)|C: edge(grayscale), L: edge (reflectivity, depth projection) | ICP,  coordinate descent algorithms | [CamVox](https://github.com/ISEE-Technology/CamVox) |
+|[Pixel-level Extrinsic Self Calibration of High Resolution LiDAR and Camera in Targetless Environments,2021](http://arxiv.org/abs/2103.01627)|C:Canny edge(grayscale), L: depth-continuous edge|point-to-line, Gaussian-Newton|[livox_camera_calib](https://github.com/hku-mars/livox_camera_calib)|
+|[CRLF: Automatic Calibration and Refinement based on Line Feature for LiDAR and Camera in Road Scenes, 2021](https://arxiv.org/pdf/2103.04558v1.pdf)|C:straight line, L: straight line | perspective3-lines (P3L) | N/A |
+|[Fast and Accurate Extrinsic Calibration for Multiple LiDARs and Cameras,2021](https://arxiv.org/pdf/2109.06550.pdf)|C:Canny edge(grayscale), L: depth-continuous edge|point-to-plane, point-to-edge|[mlcc](https://github.com/hku-mars/mlcc)|
+|[General, Single-shot, Target-less, and Automatic LiDAR-Camera Extrinsic Calibration Toolbox,ICRA 2023](https://arxiv.org/pdf/2302.05094.pdf)|C:keypoints, L: keypoints on intensity images (by SuperGlue)|reprojection error minimization, RANSAC|[direct_visual_lidar_calibration](https://github.com/koide3/direct_visual_lidar_calibration)|
+| | [Robust Calibration of Vehicle Solid-State Lidar-Camera Perception System Using Line-Weighted Correspondences in Natural Environments](https://ieeexplore.ieee.org/abstract/document/10315057) | TITS'24 |
+| P2O-Calib | [P2O-Calib: Camera-LiDAR Calibration Using
+Point-Pair Spatial Occlusion Relationship](https://arxiv.org/abs/2311.02413) | IROS'23 |
+| | [Online Camera–LiDAR Calibration Monitoring and Rotational Drift Tracking](https://ieeexplore.ieee.org/document/10374278) | TRO'23 | [Code](https://github.com/moravecj/OCaMo)
+| | [Online Calibration Between Camera and LiDAR With Spatial-Temporal Photometric Consistency](https://ieeexplore.ieee.org/abstract/document/10354343/) | RA-L'24 | [Code](https://github.com/NERanger/online_lidar_cam_calib)
 
-## 3. Other toolboxes
-|Toolbox|Introduction|Note|
-| --- | --- | --- |
-|[Apollo sensor calibration tools](https://github.com/ApolloAuto/apollo/blob/master/docs/quickstart/apollo_2_0_sensor_calibration_guide.md)|targetless method, no source code | [CN](https://blog.csdn.net/learning_tortosie/article/details/82351553?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_baidulandingword-0&spm=1001.2101.3001.4242)|
-|[Autoware camera lidar calibrator](https://github.com/Autoware-AI/utilities/tree/master/autoware_camera_lidar_calibrator)|pick points mannually, PnP|*|
-|[Autoware calibration camera lidar](https://github.com/XidianLemon/calibration_camera_lidar)| checkerboard, similar to [LCCT](http://www.cs.cmu.edu/~ranjith/lcct.html) |[CN](https://adamshan.blog.csdn.net/article/details/81670732)|
-|[livox_camera_lidar_calibration](https://github.com/Livox-SDK/livox_camera_lidar_calibration)|pick points mannually, PnP| *|
-|[OpenCalib](https://github.com/PJLab-ADG/SensorsCalibration)|target-based, target-less, mannual|OpenCalib: A Multi-sensor Calibration Toolbox for Autonomous Driving|
-|[tier4/CalibrationTools](https://github.com/tier4/CalibrationTools)|target-based, mannual|*|
+#### 2.2.2 Deep feature-based methods
+|Shortname |Paper|Source| Code|
+| --- | --- | --- | --- |
+| Se-Calib | [SE-Calib: Semantic Edge-Based LiDAR–Camera Boresight Online Calibration in Urban Scenes](https://ieeexplore.ieee.org/document/10129871) | TGRS'23 | |
+| Calib-Depth| [CalibDepth: Unifying Depth Map Representation for Iterative LiDAR-Camera Online Calibration](https://ieeexplore.ieee.org/document/10161575) | ICRA'23 | [Code](https://github.com/Brickzhuantou/CalibDepth)
+| DEDgeNet | [DEdgeNet: Extrinsic Calibration of Camera and LiDAR with Depth-discontinuous Edges](https://ieeexplore.ieee.org/document/10160910) | IROS'23 | 
+| | [Automatic Targetless Calibration for LiDAR and Camera Based on Instance Segmentation](https://ieeexplore.ieee.org/document/9830826)| RA-L'23|
+| Edge-Calib | [EdgeCalib: Multi-Frame Weighted Edge Features for Automatic Targetless LiDAR-Camera Calibration](https://ieeexplore.ieee.org/document/10669166) | RA-L'24 | 
+| Calib-Anything |[Calib-Anything: Zero-training LiDAR-Camera Extrinsic Calibration Method Using Segment Anything](https://arxiv.org/pdf/2306.02656.pdf)|ICRA'24| [Code](https://github.com/OpenCalib/CalibAnything)|
+| SG-Calib | [SGCalib: A Two-stage Camera-LiDAR Calibration Method Using Semantic Information and Geometric Features](https://ieeexplore.ieee.org/abstract/document/10610560) | ICRA'24 |
+| OL-Reg | [OL-Reg: Registration of Image and Sparse LiDAR Point Cloud With Object-Level Dense Correspondences](https://ieeexplore.ieee.org/abstract/document/10463050) | TCSVT'24 | [Code](https://github.com/anpei96/ol-reg-demo)
+| SOAC | [SOAC: Spatio-Temporal Overlap-Aware Multi-Sensor Calibration using Neural Radiance Fields](https://arxiv.org/abs/2311.15803) | CVPR'24 | 
+| | [From Chaos to Calibration: A Geometric Mutual Information Approach to Target-Free Camera LiDAR Extrinsic Calibration](https://openaccess.thecvf.com/content/WACV2024/papers/Borer_From_Chaos_to_Calibration_A_Geometric_Mutual_Information_Approach_To_WACV_2024_paper.pdf) | WACV'24 |
+| Unical | [UniCal: Unified Neural Sensor Calibration](https://waabi.ai/unical/) | ECCV'24 | 
+
+
+#### 2.2.3 E2E learning-based methods
+
+|Shortname|Paper|Source|Code|
+| --- | --- | --- | --- |
+| Sem-Calib | [Online Camera-LiDAR Calibration with Sensor Semantic Information](https://ieeexplore.ieee.org/abstract/document/9196627) | ICRA'20 | 
+| RegNet |[RegNet: Multimodal sensor registration using deep neural networks, 2017,IV](https://arxiv.org/pdf/1707.03167.pdf)|IV'2017|[Code](https://github.com/aaronlws95/regnet)|
+| CalibNet | [CalibNet: Geometrically supervised extrinsic calibration using 3d spatial transformer networks](https://arxiv.org/pdf/1803.08181.pdf)| IROS'18 |[Code](https://github.com/epiception/CalibNet)|
+| LCCNet | [LCCNet: Lidar and Camera Self-Calibration using CostVolume Network](https://openaccess.thecvf.com/content/CVPR2021W/WAD/papers/Lv_LCCNet_LiDAR_and_Camera_Self-Calibration_Using_Cost_Volume_Network_CVPRW_2021_paper.pdf)| CVPR-W'21|[LCCNet](https://github.com/IIPCVLAB/LCCNet)|
+| RGGNet | [RGGNet: Tolerance Aware LiDAR-Camera Online Calibration With Geometric Deep Learning and Generative Model](https://ieeexplore.ieee.org/abstract/document/9206138) | RA-L'21 | [Code](https://github.com/KleinYuan/RGGNet)
+| CalibFormer | [CalibFormer: A Transformer-based Automatic LiDAR-Camera Calibration Network](https://arxiv.org/pdf/2306.02656.pdf)| ICRA'24 | |
+| RLCA | [Robust LiDAR-Camera Alignment With Modality Adapted Local-to-Global Representation](https://ieeexplore.ieee.org/abstract/document/9852266) | TCSVT'23|
+| | [A Robust LiDAR-Camera Self-Calibration Via Rotation-Based Alignment and Multi-Level Cost Volume](https://ieeexplore.ieee.org/document/10328060) | RA-L'24 |
+| RobustCalib | [RobustCalib: Robust Lidar-Camera Extrinsic Calibration with Consistency Learning](https://arxiv.org/abs/2312.01085) | CoRR'24 ? |
+
+
 
